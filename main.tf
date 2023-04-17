@@ -79,7 +79,7 @@ resource "aws_route_table" "private_route" {
 }
 
 #Private route table association
-resource "aws_route_table_association" "public_assoc" {
+resource "aws_route_table_association" "private_assoc" {
 
   for_each = var.private_subnets
   subnet_id      = aws_subnet.private_subnets[each.value["name"]].id
