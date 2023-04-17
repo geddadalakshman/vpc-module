@@ -42,6 +42,7 @@ resource "aws_route_table" "public_route" {
 
   for_each = var.public_subnets
 
+
   tags = merge(
     var.tags,
     {
@@ -49,9 +50,10 @@ resource "aws_route_table" "public_route" {
     }
   )
   route {
-    cidr_block = var.public_subnets
+    cidr_block = each.value["cidr_block"]
     gateway_id = aws_internet_gateway.igw.id
   }
+
 }
 
 
