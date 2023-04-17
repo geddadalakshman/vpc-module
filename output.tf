@@ -1,3 +1,3 @@
-output "vpc" {
-  value = var.public_subnets
+output "public_subnets" {
+  value = aws_subnet.public_subnets
 }
