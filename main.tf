@@ -26,3 +26,20 @@ resource "aws_subnet" "main" {
   availability_zone = each.value["availability_zone"]
 
 }
+
+#private subnets
+
+resource "aws_subnet" "main" {
+  vpc_id     = aws_vpc.main.id
+  tags = merge(
+    var.tags,
+    {
+      Name = "${var.env}-${each.value["name"]}"
+    }
+  )
+
+  for_each = var.private_subnets
+  cidr_block = each.value["cidr_block"]
+  availability_zone = each.value["availability_zone"]
+
+}
