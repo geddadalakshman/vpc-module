@@ -40,6 +40,11 @@ resource "aws_route_table" "public_route" {
   )
 }
 
+#resource "aws_route_table_association" "public_assoc" {
+#  subnet_id      = aws_subnet.foo.id
+#  route_table_id = aws_route_table.bar.id
+#}
+
 #private subnets
 
 resource "aws_subnet" "private_subnets" {
