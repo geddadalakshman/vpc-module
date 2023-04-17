@@ -12,7 +12,7 @@ resource "aws_vpc" "main" {
 
 #Public subnets
 
-resource "aws_subnet" "main" {
+resource "aws_subnet" "public_subnets" {
   vpc_id     = aws_vpc.main.id
   tags = merge(
     var.tags,
@@ -29,7 +29,7 @@ resource "aws_subnet" "main" {
 
 #private subnets
 
-resource "aws_subnet" "main" {
+resource "aws_subnet" "private_subnets" {
   vpc_id     = aws_vpc.main.id
   tags = merge(
     var.tags,
