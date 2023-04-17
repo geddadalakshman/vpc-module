@@ -7,7 +7,15 @@ resource "aws_vpc" "main" {
       Name = "${var.env}-vpc"
     },
   )
+}
 
+###Internet gateway
+resource "aws_internet_gateway" "gw" {
+  vpc_id = aws_vpc.main.id
+
+  tags = {
+    Name = "${var.env}-IGW"
+  }
 }
 
 #Public subnets
