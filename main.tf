@@ -110,14 +110,21 @@ resource "aws_subnet" "private_subnets" {
   for_each = var.private_subnets
   cidr_block = each.value["cidr_block"]
   availability_zone = each.value["availability_zone"]
-
 }
+
+
 
 ###Private route tables
 resource "aws_route_table" "private_route" {
   vpc_id = aws_vpc.main.id
 
   for_each = var.private_subnets
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.nat_gw["public-${split("-", each.value["name"])}[1]"].id
+  }
+
   tags = merge(
     var.tags,
     {
