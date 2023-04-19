@@ -146,4 +146,11 @@ resource "aws_vpc_peering_connection" "vpc_peer" {
   peer_owner_id = data.aws_caller_identity.current.id
   peer_vpc_id   = "vpc-0a038797dcf1b01dd"
   vpc_id        = aws_vpc.main.id
+  auto_accept   = true
+  tags = merge(
+    var.tags,
+    {
+      Name = "${var.env}-vpc-peer"
+    }
+  )
 }
