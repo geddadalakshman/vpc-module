@@ -58,6 +58,12 @@ resource "aws_nat_gateway" "nat_gw" {
 resource "aws_eip" "nat_elp" {
   for_each = var.public_subnets
   vpc      = true
+  tags = merge(
+    var.tags,
+    {
+      Name = "${var.env}-${each.value["name"]}"
+    }
+  )
 }
 
 
