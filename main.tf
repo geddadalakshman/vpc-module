@@ -143,8 +143,8 @@ resource "aws_route_table_association" "private_assoc" {
 
 ###vpc peering
 resource "aws_vpc_peering_connection" "vpc_peer" {
-  peer_owner_id = data.aws_caller_identity.current.id
-  peer_vpc_id   = "vpc-0a038797dcf1b01dd"
+  peer_owner_id = data.aws_caller_identity.current.account_id
+  peer_vpc_id   = var.vpc_default_id
   vpc_id        = aws_vpc.main.id
   auto_accept   = true
   tags = merge(
