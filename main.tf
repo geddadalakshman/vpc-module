@@ -39,21 +39,26 @@ resource "aws_internet_gateway" "igw" {
   )
 }
 
-##NatGateway
-#resource "aws_nat_gateway" "nat_gw" {
-#  allocation_id = aws_eip.example.id
-#  subnet_id     = aws_subnet.example.id
-#
-#  # To ensure proper ordering, it is recommended to add an explicit dependency
-#  # on the Internet Gateway for the VPC.
-#  depends_on = [aws_internet_gateway.example]
-#}
-#
-####Elastic IP
-#resource "aws_eip" "lb" {
-#  instance = aws_instance.web.id
-#  vpc      = true
-#}
+
+#NatGateway
+resource "aws_nat_gateway" "nat_gw" {
+  for_each = var.public_subnets
+  allocation_id = aws_eip.nat_elp[each.value["name"]].id
+  subnet_id     = aws_subnet.public_subnets[each.value["name"]].id
+
+  tags = merge(
+    var.tags,
+    {
+      Name = "${var.env}-${each.value["name"]}"
+    }
+  )
+}
+
+###Elastic IP
+resource "aws_eip" "nat_elp" {
+  vpc      = true
+}
+
 
 ###---public route tables
 resource "aws_route_table" "public_route" {
