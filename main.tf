@@ -140,3 +140,10 @@ resource "aws_route_table_association" "private_assoc" {
   subnet_id      = aws_subnet.private_subnets[each.value["name"]].id
   route_table_id = aws_route_table.private_route[each.value["name"]].id
 }
+
+###vpc peering
+resource "aws_vpc_peering_connection" "vpc_peer" {
+  peer_owner_id = data.aws_caller_identity.current.id
+  peer_vpc_id   = "vpc-0a038797dcf1b01dd"
+  vpc_id        = aws_vpc.main.id
+}
